@@ -1,26 +1,40 @@
-PI = 3.1416
+def get_letter_grade(avg):
+    if avg >= 90:
+        return "A"
+    elif avg >= 80:
+        return "B"
+    elif avg >= 70:
+        return "C"
+    elif avg >= 60:
+        return "D"
+    else:
+        return "F"
 
-#Functions
-def circle_area(radius):
-    return PI * radius ** 2
+# Student's name
+student_name = input("Enter the student name: ")
 
+grade_list = []
 
-def total_due(money, tax_rate):
-    return money + (money * tax_rate)
+grade = float(input("Enter a grade: "))
+grade_list.append(grade)
 
+grade = float(input("Enter a grade: "))
+grade_list.append(grade)
 
-def to_celsius(fahrenheit):
-    return (fahrenheit - 32) * 5 / 9
+grade = float(input("Enter a grade: "))
+grade_list.append(grade)
 
+grade = float(input("Enter a grade: "))
+grade_list.append(grade)
 
-#Main Program
+grade = float(input("Enter a grade: "))
+grade_list.append(grade)
 
-# Area of Circle
-radius = float(input("Enter radius: "))
-area = circle_area(radius)
-print("Area:", format(area, ".2f"))
+# Average
+average = sum(grade_list) / len(grade_list)
 
-# Temperature Conversion
-fahrenheit = float(input("Enter Fahrenheit temperature: "))
-celsius = to_celsius(fahrenheit)
-print("Celsius:", format(celsius, ".5f"))
+letter_grade = get_letter_grade(average)
+
+print(student_name)
+print("Average:", f"{average:g}")
+print("Letter Grade:", letter_grade)
