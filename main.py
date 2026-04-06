@@ -1,46 +1,38 @@
-def show_menu():
-    print("Taco Palace Menu")
-    print("1. Taco       $3.50")
-    print("2. Burrito    $4.99")
-    print("3. Nachos     $5.25")
-    print("4. Soft Drink $1.95")
-    print("5. Quit")
+def main():
+    total_rain = 0.0
+    total_wind = 0.0
+    day_count = 0
+
+    while True:
+        # Reading input from console
+        line = input().split()
+
+        # Checking sentinel value
+        if not line or float(line[0]) == -1.0:
+            break
+
+        # Rain and wind
+        rain = float(line[0])
+        wind = float(line[1])
+
+        # Add totals
+        total_rain += rain
+        total_wind += wind
+        day_count += 1
+
+    # Only perform calculations if at least one day of data was entered
+    if day_count > 0:
+        avg_rain = total_rain / day_count
+        avg_wind = total_wind / day_count
+
+        # Weather Severity formula: (average rain * 10) + average wind
+        weather_severity = (avg_rain * 10) + avg_wind
+
+        # Format and display output
+        print(f"The average rain is {avg_rain:.1f} inches")
+        print(f"The average wind is {avg_wind:.1f} mph")
+        print(f"The weather severity for these {day_count} readings is:  {weather_severity:.1f}")
 
 
-def get_price(choice):
-    prices = {1: 3.50, 2: 4.99, 3: 5.25, 4: 1.95}
-    return prices.get(choice, 0)
-
-
-# Main program to present options to customer
-print("Welcome to Taco Palace! ...")
-order = []  # list of item names
-total = 0.0
-
-while True:
-    show_menu()
-    try:
-        choice = int(input("Enter your selection (1-5): "))
-    except:
-        print("Please enter a number.")
-        continue
-
-    if choice == 5:
-        break
-    elif 1 <= choice <= 4:
-        items = ["Taco", "Burrito", "Nachos", "Soft Drink"]
-        item_name = items[choice - 1]
-        price = get_price(choice)
-
-        print(f"You selected {item_name}")
-        order.append(item_name)
-        total += price
-    else:
-        print("Invalid choice. Try again.")
-
-# Final output to customer
-if order:
-    print("\nYou ordered:", ", ".join(order))
-    print(f"Your total ${total:.2f}")
-else:
-    print("You ordered nothing. Goodbye!")
+if __name__ == "__main__":
+    main()
