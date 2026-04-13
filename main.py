@@ -1,38 +1,65 @@
-def main():
-    total_rain = 0.0
-    total_wind = 0.0
-    day_count = 0
-
-    while True:
-        # Reading input from console
-        line = input().split()
-
-        # Checking sentinel value
-        if not line or float(line[0]) == -1.0:
-            break
-
-        # Rain and wind
-        rain = float(line[0])
-        wind = float(line[1])
-
-        # Add totals
-        total_rain += rain
-        total_wind += wind
-        day_count += 1
-
-    # Only perform calculations if at least one day of data was entered
-    if day_count > 0:
-        avg_rain = total_rain / day_count
-        avg_wind = total_wind / day_count
-
-        # Weather Severity formula: (average rain * 10) + average wind
-        weather_severity = (avg_rain * 10) + avg_wind
-
-        # Format and display output
-        print(f"The average rain is {avg_rain:.1f} inches")
-        print(f"The average wind is {avg_wind:.1f} mph")
-        print(f"The weather severity for these {day_count} readings is:  {weather_severity:.1f}")
+class Beverage:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
 
 
+class VendingMachine:
+    def __init__(self):
+        # Initializing the 6 required beverages
+        self.inventory = [
+            Beverage("Water", 1.00),
+            Beverage("Cola", 1.50),
+            Beverage("Orange Juice", 2.00),
+            Beverage("Iced Tea", 1.75),
+            Beverage("Coffee", 2.25),
+            Beverage("Sparkling Water", 1.25)
+        ]
+
+    def display_menu(self):
+        print("\n--- Vending Machine Menu ---")
+        for i, item in enumerate(self.inventory, 1):
+            print(f"{i}. {item.name} - ${item.price:.2f}")
+        print("0. Exit (Admin Only)")
+
+    def start(self):
+        while True:
+            self.display_menu()
+            try:
+                choice = int(input("\nSelect a beverage number: "))
+
+                if choice == 0:
+                    print("Shutting down...")
+                    break
+
+                if 1 <= choice <= len(self.inventory):
+                    selected_item = self.inventory[choice - 1]
+                    self.process_transaction(selected_item)
+                else:
+                    print("Invalid selection. Please try again.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+    def process_transaction(self, item):
+        print(f"You selected {item.name}. The price is ${item.price:.2f}.")
+
+        try:
+            money_inserted = float(input("Insert money: $"))
+
+            if money_inserted >= item.price:
+                change = money_inserted - item.price
+                print(f"Vending {item.name}...")
+                if change > 0:
+                    print(f"Dispensing change: ${change:.2f}")
+                print("Enjoy your drink!")
+            else:
+                shortfall = item.price - money_inserted
+                print(f"Insufficient funds. You need ${shortfall:.2f} more. Transaction cancelled.")
+        except ValueError:
+            print("Invalid payment amount. Transaction cancelled.")
+
+
+# Running the simulation
 if __name__ == "__main__":
-    main()
+    machine = VendingMachine()
+    machine.start()
